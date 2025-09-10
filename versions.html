@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My learning app</title>
+
+    <style>
+        .vokabulary {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: rgb(255, 0, 0);
+            height: 100px;
+            width: 97%;
+            border-radius: 25px;
+            position: fixed;
+            bottom: 5px;
+            right: 4px;  
+            padding: 4px 5px;
+        }
+
+        .vokabularytxt {
+            margin-right: 10px;
+            font-weight: 600;
+            font-family: Arial, Helvetica, sans-serif;
+            color: rgb(255, 255, 255);
+        }
+
+        
+    </style>
+</head>
+
+<body>
+    
+    <h2>Versionierung</h2>
+
+    <h3>Version 1.0.0. - beta</h3>
+
+    <p>Erste Version der Lernapp.
+    <br>
+    - Startbildschirm mit Funktionsauswahl.
+    <br>
+    - Einstellungsbildschirm für jede Funktion.
+    <br>
+    - Erste Funktion "Vokabeltrainer" in der Grundversion. 
+    </p>
+
+    <div class="vokabulary" onclick="window.location.href='settingshome.html'">
+        <h2 class="vokabularytxt">Zurück</h2>
+    </div>
+
+</body>
+
+</html>

@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My learning app</title>
+    <link rel="stylesheet" href="vokabeltrainer.css">
+</head>
+
+<body>
+
+    <div class="header">
+
+       <h1>Vokabeltrainer</h1> 
+    
+       <div class="menu">
+          <img class="menuimage" onclick="window.location.href='index.html'" src="img/home-icon-vector.jpg" alt="">
+          <img class="menuimage" onclick="window.location.href='settingshome.html'" src="img/vector-settings-icon-design.jpg" alt="">
+       </div>
+
+    </div>
+
+    <div class="mid">
+
+       <button class="btn" onclick="nextQuestion()">Nächste Vokabel</button>
+    
+       <div class="question" id="question">Hier erscheint die Vokabel...</div>
+
+       <input id="answer" placeholder="Antwort eingeben">
+
+       <button class="btn" onclick="checkAnswer()">Prüfen</button>
+
+       <div id="feedback"></div>
+
+    </div>
+
+    <script>
+    let vocabList = JSON.parse(localStorage.getItem("vocabList") || "[]");
+    let current = null;
+    let direction = "en";
+
+    function nextQuestion() {
+      if (vocabList.length === 0) {
+        document.getElementById("question").innerText = "Keine Vokabeln gespeichert!";
+        return;
+      }
+      const randomIndex = Math.floor(Math.random() * vocabList.length);
+      current = vocabList[randomIndex];
+      direction = Math.random() > 0.5 ? "en" : "de";
+
+      document.getElementById("question").innerText =
+        direction === "en" ? current.en : current.de;
+
+      document.getElementById("answer").value = "";
+      document.getElementById("feedback").innerText = "";
+    }
+
+    function checkAnswer() {
+      if (!current) return;
+      const userAnswer = document.getElementById("answer").value.trim().toLowerCase();
+      const correct = direction === "en" ? current.de.toLowerCase() : current.en.toLowerCase();
+
+      if (userAnswer === correct) {
+        document.getElementById("feedback").innerHTML = "<p class='correct'>✅ Richtig!</p>";
+      } else {
+        document.getElementById("feedback").innerHTML = `<p class='wrong'>❌ Falsch! Richtig wäre: ${correct}</p>`;
+      }
+    }
+  </script>
+
+</body>
+
+</html>
