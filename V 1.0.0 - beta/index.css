@@ -1,0 +1,37 @@
+.header {
+display: flex;
+justify-content: space-between;
+flex-direction: row;
+gap: 10px;
+}
+
+.menuimage {
+    height: 50px;
+    width: 50px;
+    padding-top: 25px;
+}
+
+.boxes {
+    display: flex;
+    justify-content: left;
+    flex-direction: column;
+    gap: 10px;
+    /* background-color: rgb(188, 185, 185); */
+    height: auto;
+}
+
+.vokabulary {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgb(255, 0, 0);
+  height: 100px; 
+  border-radius: 25px; 
+}
+
+.vokabularytxt {
+    margin-right: 10px;
+    font-weight: 600;
+    font-family: Arial, Helvetica, sans-serif;
+    color: rgb(255, 255, 255);
+}

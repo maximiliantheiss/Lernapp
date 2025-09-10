@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <title>Vokabeln verwalten</title>
+  <style>
+    .header {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row;
+    gap: 10px;
+    }
+    body { font-family: Arial, sans-serif; max-width: 500px; margin: auto; padding: 20px; }
+    input, button { width: 100%; padding: 8px; margin: 5px 0; }
+    table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+    th, td { border: 1px solid #ccc; padding: 8px; text-align: center; }
+    button.delete { background: red; color: white; border: none; padding: 5px 10px; }
+  </style>
+</head>
+
+<body>
+
+  <div class="header">
+
+       <h1>Vokabeltrainer</h1> 
+    
+       <div class="menu">
+          <img class="menuimage" onclick="window.location.href='index.html'" src="img/home-icon-vector.jpg" alt="">
+          <img class="menuimage" onclick="window.location.href='settingshome.html'" src="img/vector-settings-icon-design.jpg" alt="">
+       </div>
+
+    </div>
+
+  <h1>Vokabeln verwalten</h1>
+  <a href="test.html">👉 Zurück zum Üben</a>
+
+  <h3>Neue Vokabel hinzufügen</h3>
+  <input id="enWord" placeholder="Englisch">
+  <input id="deWord" placeholder="Deutsch">
+  <button onclick="addVocab()">Hinzufügen</button>
+
+  <h3>Gespeicherte Vokabeln</h3>
+  <table id="vocabTable">
+    <thead>
+      <tr><th>Englisch</th><th>Deutsch</th><th>Löschen</th></tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+
+  <button onclick="clearAll()">Alle löschen</button>
+
+  <script>
+    let vocabList = JSON.parse(localStorage.getItem("vocabList") || "[]");
+    const tableBody = document.querySelector("#vocabTable tbody");
+
+    function renderTable() {
+      tableBody.innerHTML = "";
+      vocabList.forEach((v, i) => {
+        const row = document.createElement("tr");
+        row.innerHTML = `
+          <td>${v.en}</td>
+          <td>${v.de}</td>
+          <td><button class="delete" onclick="deleteVocab(${i})">X</button></td>
+        `;
+        tableBody.appendChild(row);
+      });
+    }
+
+    function addVocab() {
+      const en = document.getElementById("enWord").value.trim();
+      const de = document.getElementById("deWord").value.trim();
+      if (!en || !de) return alert("Bitte beide Felder ausfüllen!");
+
+      vocabList.push({ en, de });
+      localStorage.setItem("vocabList", JSON.stringify(vocabList));
+      document.getElementById("enWord").value = "";
+      document.getElementById("deWord").value = "";
+      renderTable();
+    }
+
+    function deleteVocab(i) {
+      vocabList.splice(i, 1);
+      localStorage.setItem("vocabList", JSON.stringify(vocabList));
+      renderTable();
+    }
+
+    function clearAll() {
+      if (confirm("Wirklich alle Vokabeln löschen?")) {
+        vocabList = [];
+        localStorage.setItem("vocabList", JSON.stringify(vocabList));
+        renderTable();
+      }
+    }
+
+    renderTable();
+  </script>
+</body>
+</html>

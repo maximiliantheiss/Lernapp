@@ -1,0 +1,12 @@
+.header {
+display: flex;
+justify-content: space-between;
+flex-direction: row;
+gap: 10px;
+}
+
+.menuimage {
+    height: 50px;
+    width: 50px;
+    padding-top: 20px;
+}

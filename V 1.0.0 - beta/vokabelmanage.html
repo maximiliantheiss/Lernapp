@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My learning app</title>
+    <link rel="stylesheet" href="vokabelmanage.css">
+</head>
+
+<body>
+
+    <div class="header">
+
+       <h1>Vokabeltrainer</h1> 
+    
+       <div class="menu">
+          <img class="menuimage" onclick="window.location.href='index.html'" src="img/home-icon-vector.jpg" alt="">
+          <img class="menuimage" onclick="window.location.href='settingshome.html'" src="img/vector-settings-icon-design.jpg" alt="">
+       </div>
+
+    </div>
+
+    <div class="mid">
+        
+       <h3>Neue Vokabel hinzufügen</h3>
+
+       <input id="enWord" placeholder="Englisch">
+
+       <input id="deWord" placeholder="Deutsch">
+
+       <button onclick="addVocab()">Hinzufügen</button>
+
+       <h3>Gespeicherte Vokabeln</h3>
+
+       <table id="vocabTable">
+
+         <thead>
+           <tr><th>Englisch</th><th>Deutsch</th><th>Löschen</th></tr>
+         </thead>
+         <tbody></tbody>
+
+       </table>
+
+  <button onclick="clearAll()">Alle löschen</button>
+
+    </div>
+
+  <script>
+    let vocabList = JSON.parse(localStorage.getItem("vocabList") || "[]");
+    const tableBody = document.querySelector("#vocabTable tbody");
+
+    function renderTable() {
+      tableBody.innerHTML = "";
+      vocabList.forEach((v, i) => {
+        const row = document.createElement("tr");
+        row.innerHTML = `
+          <td>${v.en}</td>
+          <td>${v.de}</td>
+          <td><button class="delete" onclick="deleteVocab(${i})">X</button></td>
+        `;
+        tableBody.appendChild(row);
+      });
+    }
+
+    function addVocab() {
+      const en = document.getElementById("enWord").value.trim();
+      const de = document.getElementById("deWord").value.trim();
+      if (!en || !de) return alert("Bitte beide Felder ausfüllen!");
+
+      vocabList.push({ en, de });
+      localStorage.setItem("vocabList", JSON.stringify(vocabList));
+      document.getElementById("enWord").value = "";
+      document.getElementById("deWord").value = "";
+      renderTable();
+    }
+
+    function deleteVocab(i) {
+      vocabList.splice(i, 1);
+      localStorage.setItem("vocabList", JSON.stringify(vocabList));
+      renderTable();
+    }
+
+    function clearAll() {
+      if (confirm("Wirklich alle Vokabeln löschen?")) {
+        vocabList = [];
+        localStorage.setItem("vocabList", JSON.stringify(vocabList));
+        renderTable();
+      }
+    }
+
+    renderTable();
+  </script>
+
+</body>
+
+</html>
